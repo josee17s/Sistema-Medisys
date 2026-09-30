@@ -1,0 +1,45 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: medisys-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_PATH: /data/database.db
+      UPLOADS_DIR: /data/uploads
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-cambia-esta-clave-en-produccion}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-480}
+      # SMTP corporativo interno para el envío de OTP de recuperación de
+      # contraseña. Debe ser un servidor de correo alcanzable dentro de la
+      # misma LAN (o dejar vacío para solo registrar el código en el log).
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-no-reply@clinica.local}
+      SMTP_USE_TLS: ${SMTP_USE_TLS:-true}
+      TZ: America/Mexico_City
+    volumes:
+      # Persistencia de la base de datos SQLite y de los archivos subidos
+      # directamente en el sistema de archivos del host Windows.
+      - ./data:/data
+    ports:
+      - "8000:8000"
+    networks:
+      - medisys-lan
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: medisys-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      - medisys-lan
+
+networks:
+  medisys-lan:
+    driver: bridge

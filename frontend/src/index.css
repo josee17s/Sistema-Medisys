@@ -1,0 +1,97 @@
+@font-face {
+  font-family: "Gotham";
+  src: url("./assets/fonts/GothamNarrow-Book.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Gotham";
+  src: url("./assets/fonts/Gotham-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source Sans Pro";
+  src: url("./assets/fonts/SourceSansPro-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Source Sans Pro";
+  src: url("./assets/fonts/SourceSansPro-Black.otf") format("opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  background-color: #f7fafb;
+  color: #2d2926;
+  font-family: "Source Sans Pro", -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+::selection {
+  background: #003b5c;
+  color: white;
+}
+
+.field-label {
+  @apply text-sm font-medium text-ink/70 mb-1 block;
+}
+
+.field-input {
+  @apply w-full rounded-md border border-clinic-border bg-white px-3 py-2 text-sm text-ink
+  placeholder:text-ink/30 focus:outline-none focus:ring-2 focus:ring-clinic-primary/40 focus:border-clinic-primary;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-md bg-clinic-primary px-4 py-2
+  text-sm font-medium text-white transition hover:bg-clinic-primaryDark disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center gap-2 rounded-md border border-clinic-border bg-white px-4 py-2
+  text-sm font-medium text-ink transition hover:border-clinic-primary hover:text-clinic-primary;
+}
+
+.btn-danger {
+  @apply inline-flex items-center justify-center gap-2 rounded-md border border-red-200 bg-red-50 px-3 py-1.5
+  text-xs font-medium text-red-700 transition hover:bg-red-100;
+}
+
+.card {
+  @apply rounded-lg border border-clinic-border bg-white;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white;
+  }
+  .print-area {
+    box-shadow: none !important;
+    border: none !important;
+  }
+}
+
+@media print {
+  @page {
+    margin: 1.5cm;
+  }
+  .print-area {
+    border: none !important;
+  }
+}
